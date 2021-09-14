@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31515.178
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "01-Hello-world", "01-Hello-world\01-Hello-world.csproj", "{F9B5EAC6-D79C-4041-978B-8BCEDA28A9E9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "01-Uvod_00-Opakovani-syntaxe", "01-Hello-world\01-Uvod_00-Opakovani-syntaxe.csproj", "{F9B5EAC6-D79C-4041-978B-8BCEDA28A9E9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01-Uvod", "01-Uvod", "{12D3E4E1-282D-4CB1-A2D9-2AEA30F842CD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "01-Uvod_01-Prohozeni-promennych", "01-Uvod_01-Prohozeni-promennych\01-Uvod_01-Prohozeni-promennych.csproj", "{05C24ADA-32FE-4672-B1B6-B2032D1A117B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,9 +19,17 @@ Global
 		{F9B5EAC6-D79C-4041-978B-8BCEDA28A9E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F9B5EAC6-D79C-4041-978B-8BCEDA28A9E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F9B5EAC6-D79C-4041-978B-8BCEDA28A9E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{05C24ADA-32FE-4672-B1B6-B2032D1A117B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05C24ADA-32FE-4672-B1B6-B2032D1A117B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05C24ADA-32FE-4672-B1B6-B2032D1A117B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05C24ADA-32FE-4672-B1B6-B2032D1A117B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{F9B5EAC6-D79C-4041-978B-8BCEDA28A9E9} = {12D3E4E1-282D-4CB1-A2D9-2AEA30F842CD}
+		{05C24ADA-32FE-4672-B1B6-B2032D1A117B} = {12D3E4E1-282D-4CB1-A2D9-2AEA30F842CD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D83AD21A-7ACE-462E-BA60-82C524BDA676}
