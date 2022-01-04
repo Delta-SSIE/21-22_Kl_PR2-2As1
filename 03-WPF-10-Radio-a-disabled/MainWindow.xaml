@@ -55,12 +55,14 @@
                   Grid.Column="1"
                   HorizontalAlignment="Center"
                   Click="SlevaCB_Click"
+                  IsChecked="True"
                   />
 
         <StackPanel x:Name="Slevy"
                     Orientation="Vertical"
                     Grid.Row="2"
                     Grid.Column="2"
+                    IsEnabled="True"
                     >
             <RadioButton Content="Student"/>
             <RadioButton Content="Učitel"/>

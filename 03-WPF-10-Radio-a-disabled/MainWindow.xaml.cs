@@ -27,7 +27,10 @@ namespace _03_WPF_10_Radio_a_disabled
 
         private void SlevaCB_Click(object sender, RoutedEventArgs e)
         {
-            Slevy.IsEnabled = !Slevy.IsEnabled;
+            if (SlevaCB.IsChecked == true)
+                Slevy.IsEnabled = true;
+            else
+                Slevy.IsEnabled = false;
         }
     }
 }
