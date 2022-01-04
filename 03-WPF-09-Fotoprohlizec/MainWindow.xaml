@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:_03_WPF_09_Fotoprohlizec"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
+    <Grid Margin="5">
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition Height="30"/>
@@ -19,7 +19,7 @@
         <Button x:Name="LoadBtn"
                 Content="Load"
                 Grid.Row="1"
-                Grid.Column="1"
+                Grid.Column="1" Click="LoadBtn_Click"                
                 />
 
         <Label x:Name="FilenameLbl"
