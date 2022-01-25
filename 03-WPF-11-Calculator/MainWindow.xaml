@@ -11,7 +11,17 @@
                TargetType="Button">
             <Setter Property="FontSize" Value="30"/>
             <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="Black"/>
+        </Style>
+        <Style x:Key="ACBtnStyle"
+               TargetType="Button"
+               BasedOn="{StaticResource BaseBtnStyle}">
             <Setter Property="Background" Value="Red"/>
+        </Style>
+        <Style x:Key="NumberBtnStyle"
+               TargetType="Button"
+               BasedOn="{StaticResource BaseBtnStyle}">
+            <Setter Property="Background" Value="Green"/>
         </Style>
     </Window.Resources>
     <Grid>
@@ -43,6 +53,115 @@
                 Grid.Row="1"
                 Grid.Column="0"
                 Content="AC"
+                Style="{StaticResource ACBtnStyle}"
+                />
+        <Button x:Name="PlusMinusBtn"
+                Grid.Row="1"
+                Grid.Column="1"
+                Content="+/-"
+                Style="{StaticResource BaseBtnStyle}"
+                />
+        <Button x:Name="PercentBtn"
+                Grid.Row="1"
+                Grid.Column="2"
+                Content="%"
+                Style="{StaticResource BaseBtnStyle}"
+                />
+        <Button x:Name="DivisionBtn"
+                Grid.Row="1"
+                Grid.Column="3"
+                Content="/"
+                Style="{StaticResource BaseBtnStyle}"
+                />
+        <Button x:Name="SevenBtn"
+                Grid.Row="2"
+                Grid.Column="0"
+                Content="7"
+                Style="{StaticResource NumberBtnStyle}"
+                />
+        <Button x:Name="EightBtn"
+                Grid.Row="2"
+                Grid.Column="1"
+                Content="8"
+                Style="{StaticResource NumberBtnStyle}"
+                />
+        <Button x:Name="NineBtn"
+                Grid.Row="2"
+                Grid.Column="2"
+                Content="9"
+                Style="{StaticResource NumberBtnStyle}"
+                />
+        <Button x:Name="MultiplicationBtn"
+                Grid.Row="2"
+                Grid.Column="3"
+                Content="*"
+                Style="{StaticResource BaseBtnStyle}"
+                />
+        <Button x:Name="FourBtn"
+                Grid.Row="3"
+                Grid.Column="0"
+                Content="4"
+                Style="{StaticResource NumberBtnStyle}"
+                />
+        <Button x:Name="FiveBtn"
+                Grid.Row="3"
+                Grid.Column="1"
+                Content="5"
+                Style="{StaticResource NumberBtnStyle}"
+                />
+        <Button x:Name="SixBtn"
+                Grid.Row="3"
+                Grid.Column="2"
+                Content="6"
+                Style="{StaticResource NumberBtnStyle}"
+                />
+        <Button x:Name="SubtractionBtn"
+                Grid.Row="3"
+                Grid.Column="3"
+                Content="-"
+                Style="{StaticResource BaseBtnStyle}"
+                />
+        <Button x:Name="OneBtn"
+                Grid.Row="4"
+                Grid.Column="0"
+                Content="1"
+                Style="{StaticResource NumberBtnStyle}"
+                />
+        <Button x:Name="TwoBtn"
+                Grid.Row="4"
+                Grid.Column="1"
+                Content="2"
+                Style="{StaticResource NumberBtnStyle}"
+                />
+        <Button x:Name="ThreeBtn"
+                Grid.Row="4"
+                Grid.Column="2"
+                Content="3"
+                Style="{StaticResource NumberBtnStyle}"
+                />
+        <Button x:Name="AdditionBtn"
+                Grid.Row="4"
+                Grid.Column="3"
+                Content="+"
+                Style="{StaticResource BaseBtnStyle}"
+                />
+        <Button x:Name="ZeroBtn"
+                Grid.Row="5"
+                Grid.Column="0"
+                Content="0"
+                Style="{StaticResource NumberBtnStyle}"
+                />
+        <Button x:Name="DecimalBtn"
+                Grid.Row="5"
+                Grid.Column="1"
+                Content="."
+                Style="{StaticResource BaseBtnStyle}"
+                />
+        <Button x:Name="EqualsBtn"
+                Grid.Row="5"
+                Grid.Column="2"
+                Grid.ColumnSpan="2"
+                Content="="
                 Style="{StaticResource BaseBtnStyle}"
                 />
     </Grid>
