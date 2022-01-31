@@ -29,5 +29,6 @@ namespace _03_WPF_11_Calculator
         {
             return num / 100;
         }
+
     }
 }
