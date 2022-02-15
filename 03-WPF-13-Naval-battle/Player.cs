@@ -24,6 +24,15 @@ namespace _03_WPF_13_Naval_battle
 
         public Player(int shipCount, int seaSize)
         {
+            if (shipCount < 1)
+                throw new ArgumentException("Too few ships");
+
+            if (seaSize < 2)
+                throw new ArgumentException("Sea is too little");
+
+            if (shipCount >= seaSize * seaSize)
+                throw new ArgumentException("Too many ships, increase sea size");
+            
             _shipCount = shipCount;
             _seaSize = seaSize;
 
@@ -33,15 +42,41 @@ namespace _03_WPF_13_Naval_battle
 
         private void CreateSea()
         {
-            throw new NotImplementedException();
+            _sea = new TileState[_seaSize, _seaSize];
         }
         private void PlaceShips()
         {
-            throw new NotImplementedException();
+            int placedShips = 0;
+            Random rnd = new Random();
+
+            while (placedShips < _shipCount)
+            {
+                int x = rnd.Next(_seaSize);
+                int y = rnd.Next(_seaSize);
+                if (_sea[x, y] != TileState.Ship)
+                {
+                    _sea[x, y] = TileState.Ship;
+                    placedShips++;
+                }
+            }
         }
         public Coordinates ChooseTarget(TileState[,] opponentSea)
         {
-            throw new NotImplementedException();
+            Random rnd = new Random();
+            Coordinates target = null;
+
+            do
+            {
+                int x = rnd.Next(_seaSize);
+                int y = rnd.Next(_seaSize);
+                if (opponentSea[x, y] == TileState.Empty)
+                {
+                    target = new Coordinates() { X = x, Y = y };
+                }
+            }
+            while (target == null);
+
+            return target;
         }
         /// <summary>
         /// Receives target coordinates, marks down result to private sea
@@ -50,7 +85,24 @@ namespace _03_WPF_13_Naval_battle
         /// <returns>true on hitting a ship, false otherwise</returns>
         public bool HandleShot(Coordinates target)
         {
-            throw new NotImplementedException();
+            TileState state = _sea[target.X, target.Y];
+
+            switch (state)
+            {
+                case TileState.Empty:
+                    _sea[target.X, target.Y] = TileState.Missed;
+                    return false;
+                case TileState.Ship:
+                    _sea[target.X, target.Y] = TileState.Wreck;
+                    WrecksCount++;
+                    return true;
+                case TileState.Wreck:
+                    return false;
+                case TileState.Missed:
+                    return false;
+                default:
+                    return false; // impossible case
+            }
         }
         public TileState[,] GetPrivateSea()
         {
