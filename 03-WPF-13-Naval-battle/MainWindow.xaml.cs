@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace _03_WPF_13_Naval_battle
 {
@@ -20,11 +21,17 @@ namespace _03_WPF_13_Naval_battle
     /// </summary>
     public partial class MainWindow : Window
     {
-        private const int _seaSize = 10;
-        private const int _shipCount = 12;
+        private const int _seaSize = 3;
+        private const int _shipCount = 4;
+        private const int _shotWait = 1000; //milliseconds to wait before computer shooting
 
         private Player _player;
         private Player _computer;
+
+        private Rectangle[,] _playerTiles;
+        private DispatcherTimer _shotTimer;
+
+        private bool _playerCanShoot;
 
         public MainWindow()
         {
@@ -35,14 +42,26 @@ namespace _03_WPF_13_Naval_battle
 
             //inicializovat oba displeje
             InitializeSeaDisplay(PlayerSeaDisplay, _player.GetPrivateSea());
-            InitializeSeaDisplay(ComputerSeaDisplay, _computer.GetPublicSea());
+            InitializeSeaDisplay(ComputerSeaDisplay, _computer.GetPublicSea(), true);
 
             //inicializovat počítadla
             RenderHitsDisplay(PlayerHitsDisplay, _player.WrecksCount);
             RenderHitsDisplay(ComputerHitsDisplay, _computer.WrecksCount);
+
+            _shotTimer = new DispatcherTimer();
+            _shotTimer.Interval = TimeSpan.FromMilliseconds(_shotWait);
+            _shotTimer.Tick += _shotTimer_Tick;
+
+            _playerCanShoot = true;
         }
 
-        private void InitializeSeaDisplay(Grid display, TileState[,] sea)
+        private void _shotTimer_Tick(object sender, EventArgs e)
+        {
+            _shotTimer.Stop();
+            ComputerMove();
+        }
+
+        private void InitializeSeaDisplay(Grid display, TileState[,] sea, bool isClickable = false)
         {
             for (int i = 0; i < _seaSize; i++)
             {
@@ -52,6 +71,10 @@ namespace _03_WPF_13_Naval_battle
             {
                 display.ColumnDefinitions.Add(new ColumnDefinition());
             }
+            
+            if (!isClickable)
+                _playerTiles = new Rectangle[_seaSize, _seaSize]; //uložím si mapu, kde který rectangle je
+            
             for (int x = 0; x < _seaSize; x++)
             {
                 for (int y = 0; y < _seaSize; y++)
@@ -60,7 +83,15 @@ namespace _03_WPF_13_Naval_battle
 
                     RenderTile(tile, sea[x, y]);
 
-                    tile.MouseDown += Tile_MouseDown;
+                    if (isClickable)
+                    {
+                        tile.MouseDown += Tile_MouseDown;
+                        tile.Cursor = Cursors.Hand;
+                    }
+                    else
+                    {
+                        _playerTiles[x, y] = tile; //hráčovu dlaždici si poznačím do mapy
+                    }
 
                     Grid.SetRow(tile, y);
                     Grid.SetColumn(tile, x);
@@ -72,17 +103,68 @@ namespace _03_WPF_13_Naval_battle
 
         private void Tile_MouseDown(object sender, MouseButtonEventArgs e)
         {
+            if (!_playerCanShoot)
+                return;
+
             //Když hráč klikne
+            Rectangle tile = (Rectangle)sender;
+            int x = Grid.GetColumn(tile);
+            int y = Grid.GetRow(tile);
+            Coordinates target = new Coordinates() { X = x, Y = y };
 
             //zjistím stav cíle
-
-            //když je tam loď (apod)
-            //změním na vrak ...
+            bool hit = _computer.HandleShot(target);
 
             //vykreslím výsledek střely
+            RenderTile(tile, _computer.GetPublicSea()[x, y]);
+            RenderHitsDisplay(ComputerHitsDisplay, _computer.WrecksCount);
 
             //když počítači dojdou lodě
-            //ohlásím vítězství a skončím
+            if (!_computer.IsAlive)
+            {
+                //ohlásím vítězství a skončím
+                MessageBox.Show("Victory", "You Win!");
+                Close();
+                return;
+            }
+
+            if (!hit)
+            {
+                _shotTimer.Start();
+                _playerCanShoot = false;
+            }
+        }
+
+        private void ComputerMove()
+        {
+            //počítač vymyslí cíl
+            Coordinates target = _computer.ChooseTarget(_player.GetPublicSea());
+            Rectangle tile = _playerTiles[target.X, target.Y];
+
+            //zjistím stav cíle
+            bool hit = _player.HandleShot(target);
+
+            //vykreslím výsledek střely
+            RenderTile(tile, _player.GetPublicSea()[target.X, target.Y]);
+            RenderHitsDisplay(PlayerHitsDisplay, _player.WrecksCount);
+
+            //když hráči dojdou lodě
+            if (!_player.IsAlive)
+            {
+                //ohlásím prohru a skončím
+                MessageBox.Show("Defeat", "You Lose!");
+                Close();
+                return;
+            }
+
+            if (hit)
+            {
+                _shotTimer.Start();
+            }
+            else 
+            {
+               _playerCanShoot = true;
+            }
         }
 
         private void RenderTile(Rectangle tile, TileState state)
